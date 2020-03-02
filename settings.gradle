@@ -1,0 +1,2 @@
+include ':app', ':web', ':models'
+rootProject.name='SampleMVVM'
