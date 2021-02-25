@@ -15,8 +15,11 @@ class GistViewModel : ViewModel() {
         emit(retrievedGists)
     }
 
-    fun doAction() {
+    fun changeSorting(sortInt: Int) {
         // depending on the action, do necessary business logic calls and update the
         // userLiveData.
+        gistLiveData.value?.sortedBy { it.user }?.let {
+            gistLiveData.postValue(it)
+        }
     }
 }

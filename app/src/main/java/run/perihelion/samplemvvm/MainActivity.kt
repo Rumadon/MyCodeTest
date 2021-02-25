@@ -6,26 +6,21 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import run.perihelion.web.WebHandler
-import androidx.lifecycle.ViewModelProviders
 
 class MainActivity : AppCompatActivity() {
     lateinit var gistsViewModel: GistViewModel
-
+    private val gistAdapter = GistRecyclerAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
         gistsViewModel = ViewModelProvider(this).get(GistViewModel::class.java)
-        showGistList()
+        main_gist_recycler.adapter = gistAdapter
+        attachGistList()
+//        fab.addMenuItem (){  }
 
-        fab.setOnClickListener { view ->
-            Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show()
-        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -43,9 +38,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showGistList(){
+    private fun attachGistList() {
         gistsViewModel.getGists().observe(this, Observer {
-
+            gistAdapter.data = it
         })
     }
 }
